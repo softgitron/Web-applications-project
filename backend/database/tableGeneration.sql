@@ -6,15 +6,15 @@ CREATE TABLE IF NOT EXISTS `chirpdb`.`users` (
   `profilePicture` CHAR(30) NULL,
   `visibility` TINYINT(4) NOT NULL,
   PRIMARY KEY (`userId`),
-  UNIQUE INDEX `nickname_UNIQUE` (`nickname` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
+  UNIQUE INDEX `nickname_UNIQUE` (`nickname` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC));
 
 CREATE TABLE IF NOT EXISTS `chirpdb`.`logins` (
   `token` VARCHAR(200) NOT NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `userId` INT(11) NOT NULL,
   PRIMARY KEY (`token`),
-  INDEX `userId_idx` (`userId` ASC) VISIBLE,
+  INDEX `userId_idx` (`userId` ASC),
   CONSTRAINT `userId`
     FOREIGN KEY (`userId`)
     REFERENCES `chirpdb`.`users` (`userId`)
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `chirpdb`.`posts` (
   `image` CHAR(60) NULL,
   `visibility` TINYINT NOT NULL,
   PRIMARY KEY (`postId`),
-  INDEX `userId_idx` (`userId` ASC) VISIBLE,
+  INDEX `userId_idx` (`userId` ASC),
   CONSTRAINT `userIdPosts`
     FOREIGN KEY (`userId`)
     REFERENCES `chirpdb`.`users` (`userId`)
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `chirpdb`.`notifications` (
   `text` VARCHAR(100) NOT NULL,
   `type` TINYINT NOT NULL,
   PRIMARY KEY (`notificationId`),
-  INDEX `userIdNotifications_idx` (`userId` ASC) VISIBLE,
+  INDEX `userIdNotifications_idx` (`userId` ASC),
   CONSTRAINT `userIdNotifications`
     FOREIGN KEY (`userId`)
     REFERENCES `chirpdb`.`users` (`userId`)
