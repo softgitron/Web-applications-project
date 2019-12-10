@@ -1,0 +1,66 @@
+# docker-compose.yml
+version: "3.7"
+services:
+    db:
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+            MYSQL_DATABASE: chirpdb
+            MYSQL_USER: chirpweb
+            MYSQL_PASSWORD_FILE: /run/secrets/db_password
+        secrets:
+            - db_root_password
+            - db_password
+        volumes:
+            - db_data:/var/lib/mysql
+        expose:
+            - "3306"
+
+    backend:
+        build: ./backend
+        hostname: backend
+        depends_on:
+            - db
+        links:
+            - db
+        ports:
+            - 4040:4040
+        environment:
+            MYSQL_HOST: db
+            MYSQL_PORT: 3306
+            MYSQL_DATABASE: chirpdb
+            MYSQL_USER: chirpweb
+            MYSQL_PASSWORD: /run/secrets/db_password
+            WEB_TOKEN_PRIVATE_KEY: /run/secrets/token_pk
+            CORS_SITES: /run/secrets/cors_sites
+        secrets:
+            - db_password
+            - token_pk
+            - cors_sites
+
+    frontend:
+        build: ./frontend
+        hostname: frontend
+        ports:
+            - 80:80
+        depends_on:
+            - backend
+        links:
+            - backend
+        environment:
+            WAIT_HOSTS: backend:4040
+            PORT: 80
+
+secrets:
+    db_password:
+        file: ./db_password.txt
+    db_root_password:
+        file: ./db_root_password.txt
+    token_pk:
+        file: ./token_pk.txt
+    cors_sites:
+        file: ./cors_sites.txt
+
+volumes:
+    db_data:

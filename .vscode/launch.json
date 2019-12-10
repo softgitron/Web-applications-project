@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": ["100"]
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost",
+            "webRoot": "${workspaceFolder}",
+            "runtimeExecutable": "/opt/google/chrome/chrome",
+            "runtimeArgs": ["--password-store=basic"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Node",
+            "envFile": "${workspaceFolder}/init_env.sh",
+            "skipFiles": ["<node_internals>/**"],
+            "program": "${workspaceFolder}/backend/index.js"
+        }
+    ]
+}
