@@ -9,7 +9,7 @@ import {
     PAGE_CHANGE
 } from "../actions/user";
 
-const BASE_LOCATION = window.location.protocol + "//" + window.location.hostname + ":4040/api";
+const BASE_LOCATION = window.location.protocol + "//" + window.location.hostname + "/api";
 
 export function authenticate(credentials) {
     return dispatch => {

@@ -8,7 +8,7 @@ cd ..
 # screen -S db -d -m sudo docker-compose -p 3306:3306 run db bash
 screen -S db -d -m sudo docker-compose run -p 3306:3306 db
 cd frontend
-export PORT=80
+export PORT=8080
 # export HTTPS=true
 screen -S front -d -m sudo -E npm start
 # sleep 1

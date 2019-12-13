@@ -111,12 +111,16 @@ function init_listen() {
                     },
                     app
                 )
-                .listen(constants.hostPort);
-            console.log(`Running on https://${constants.hostAddress}:${constants.hostPort}`);
+                .listen(process.env["BACKEND_PORT"]);
+            console.log(
+                `Running on https://${process.env["BACKEND_ADDRESS"]}:${process.env["BACKEND_PORT"]}`
+            );
         } else {
             console.log("Warning: server.key or server.cert not found. Running without https.");
-            app.listen(constants.hostPort, constants.hostAddress);
-            console.log(`Running on http://${constants.hostAddress}:${constants.hostPort}`);
+            app.listen(process.env["BACKEND_PORT"], process.env["BACKEND_ADDRESS"]);
+            console.log(
+                `Running on http://${process.env["BACKEND_ADDRESS"]}:${process.env["BACKEND_PORT"]}`
+            );
         }
     } catch (err) {
         console.log(err);

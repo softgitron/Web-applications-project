@@ -1,8 +1,6 @@
 // https://stackoverflow.com/questions/8595509/how-do-you-share-constants-in-nodejs-modules
 
 module.exports = Object.freeze({
-    hostAddress: "0.0.0.0",
-    hostPort: 4040,
     maxConnectionAttempts: 10,
     reTryTime: 15,
     requiredTableNames: ["Users", "Logins", "Friends", "Posts", "Notifications"],

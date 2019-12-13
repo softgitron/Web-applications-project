@@ -1,6 +1,6 @@
 import { GET_POSTS, GET_POSTS_SUCCESS, GET_POSTS_FAILURE, RESET_POSTS } from "../actions/getPosts";
 
-const BASE_LOCATION = window.location.protocol + "//" + window.location.hostname + ":4040/api";
+const BASE_LOCATION = window.location.protocol + "//" + window.location.hostname + "/api";
 
 export function getPosts(userId, postId) {
     return dispatch => {

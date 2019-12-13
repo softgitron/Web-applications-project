@@ -1,6 +1,6 @@
 import { NEW_POST, NEW_POST_SUCCESS, NEW_POST_FAILURE, RESET_STATUS } from "../actions/newPost";
 
-const BASE_LOCATION = window.location.protocol + "//" + window.location.hostname + ":4040/api";
+const BASE_LOCATION = window.location.protocol + "//" + window.location.hostname + "/api";
 
 export function newPost(newPost) {
     return dispatch => {

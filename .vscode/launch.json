@@ -13,7 +13,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "http://localhost",
+            "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}",
             "runtimeExecutable": "/opt/google/chrome/chrome",
             "runtimeArgs": ["--password-store=basic"]
@@ -24,7 +24,9 @@
             "name": "Launch Node",
             "envFile": "${workspaceFolder}/init_env.sh",
             "skipFiles": ["<node_internals>/**"],
-            "program": "${workspaceFolder}/backend/index.js"
+            "program": "${workspaceFolder}/backend/index.js",
+            "runtimeExecutable": "/usr/bin/sudo",
+            "runtimeArgs": ["-E", "/usr/bin/node"]
         }
     ]
 }
