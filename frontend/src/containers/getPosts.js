@@ -1,30 +1,19 @@
-import { compose } from "redux";
 import { connect } from "react-redux";
-import { asyncConnect } from "redux-connect";
 
-import { getPublicPosts, getUserPosts, resetPosts } from "../actionCreators/getPosts";
+import { getPosts, resetPosts } from "../actionCreators/getPosts";
 import postController from "../components/postController";
 
-const _async = asyncConnect([
-    {
-        promise: ({ store: { dispatch } }) => {
-            return dispatch(getPublicPosts());
-        }
-    }
-]);
 const mapStateToProps = state => {
     return {
         results: state.getPostsReducer.results,
-        message: state.getPostsReducer.message
+        message: state.getPostsReducer.message,
+        fetching: state.getPostsReducer.isFetching
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
-        getPublicPosts: postId => {
-            dispatch(getPublicPosts(postId));
-        },
-        getUserPosts: (userId, postId) => {
-            dispatch(getUserPosts(userId, postId));
+        getPosts: (userId, postId) => {
+            dispatch(getPosts(userId, postId));
         },
         resetPosts: () => {
             dispatch(resetPosts());
@@ -33,4 +22,4 @@ const mapDispatchToProps = dispatch => {
 };
 const _connect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(_async, _connect)(postController);
+export default _connect(postController);

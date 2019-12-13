@@ -22,12 +22,14 @@ export const style = makeStyles(theme => ({
         marginRight: theme.spacing(2)
     },
     title: {
-        flexGrow: 1
+        flexGrow: 1,
+        fontSize: 18
     },
     search: {
         position: "relative",
-        minWidth: "20vw",
-        maxWidth: "10em",
+        minWidth: "18vw",
+        maxWidth: "30vw",
+        flexShrink: 1,
         borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.common.white, 0.15),
         "&:hover": {
@@ -37,7 +39,7 @@ export const style = makeStyles(theme => ({
         marginLeft: 0
     },
     searchIcon: {
-        width: theme.spacing(7),
+        width: theme.spacing(5),
         height: "100%",
         position: "absolute",
         pointerEvents: "none",
@@ -49,7 +51,7 @@ export const style = makeStyles(theme => ({
         color: "inherit"
     },
     inputInput: {
-        padding: theme.spacing(1, 1, 1, 7),
+        padding: theme.spacing(1, 1, 1, 5),
         transition: theme.transitions.create("width")
     }
 }));

@@ -1,12 +1,18 @@
 #!/bin/bash
+# Only for development environment.
+# Edit from docker-compose.yml directly if needed.
+# Changing these values is currently only partly supported.
 MYSQL_DATABASE="chirpdb"
 MYSQL_USER="chirpweb"
-MYSQL_PASSWORD=""
-MYSQL_ROOT_PASSWORD=""
 MYSQL_HOST="127.0.0.1"
 MYSQL_PORT="3306"
-WEB_TOKEN_PRIVATE_KEY=""
-CORS_SITES="http://localhost https://localhost http://192.168.3.13"
+
+# THESE VALUES SHOULD BE UPDATED BY YOU
+# Values will be passed to docker containers
+MYSQL_PASSWORD="YOUR PASSWORD HERE"
+MYSQL_ROOT_PASSWORD="YOUR PASSWORD HERE"
+WEB_TOKEN_PRIVATE_KEY="YOUR TOKEN HERE"
+CORS_SITES="http://localhost https://localhost"
 
 export MYSQL_DATABASE
 export MYSQL_USER

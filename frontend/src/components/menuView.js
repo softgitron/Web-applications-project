@@ -31,14 +31,23 @@ function Menu(props) {
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
                             </div>
-                            <InputBase
-                                placeholder="Search…"
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput
+                            <form
+                                className={classes.form}
+                                onSubmit={e => {
+                                    e.preventDefault();
+                                    props.doSearch();
                                 }}
-                                inputProps={{ "aria-label": "search" }}
-                            />
+                            >
+                                <InputBase
+                                    placeholder="Search…"
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput
+                                    }}
+                                    inputProps={{ "aria-label": "search" }}
+                                    onChange={props.onSearchChange}
+                                />
+                            </form>
                         </div>
                         {props.buttons.map(button => (
                             <Button color="inherit" onClick={button.click} key={button.text}>

@@ -1,37 +1,31 @@
-import { compose } from "redux";
 import { connect } from "react-redux";
-import { asyncConnect } from "redux-connect";
 
-import { signIn, signUp, logOut } from "../actionCreators/user";
-import UserRouter from "../components/userRouter";
+import { authenticate, checkCookie, logOut, pageChange } from "../actionCreators/user";
+import UserRouter from "../pages/userRouter";
 
-const _async = asyncConnect([
-    {
-        promise: ({ store: { dispatch } }) => {
-            return dispatch(signIn());
-        }
-    }
-]);
 const mapStateToProps = state => {
     return {
         user: state.userReducer.user,
         message: state.userReducer.message,
-        state: state.userReducer.state
+        authenticationState: state.userReducer.authenticationState
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
-        signIn: credentials => {
-            dispatch(signIn(credentials));
+        authenticate: credentials => {
+            dispatch(authenticate(credentials));
         },
-        signUp: credentials => {
-            dispatch(signUp(credentials));
+        checkCookie: () => {
+            dispatch(checkCookie());
         },
         logOut: () => {
             dispatch(logOut());
+        },
+        pageChange: () => {
+            dispatch(pageChange());
         }
     };
 };
 const _connect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(_async, _connect)(UserRouter);
+export default _connect(UserRouter);

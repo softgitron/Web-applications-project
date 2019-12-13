@@ -4,6 +4,7 @@ const queries = require("../database/queries"),
 exports.doSearch = async req => {
     let request = req.body;
     request.userId = req.user.id;
+    request.query = request.query.toLowerCase();
     let foundUsers;
     let foundPosts;
     try {

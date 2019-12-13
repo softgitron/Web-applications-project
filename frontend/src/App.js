@@ -6,6 +6,8 @@ import { Provider } from "react-redux";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { getPostsReducer } from "./reducers/getPosts";
 import { userReducer } from "./reducers/user";
+import { newPostReducer } from "./reducers/newPost";
+import { getSearchReducer } from "./reducers/getSearch";
 import UserRouter from "./containers/user";
 
 import "./styles/App.css";
@@ -16,6 +18,8 @@ const store = createStore(
     combineReducers({
         reduxAsyncConnect,
         getPostsReducer,
+        newPostReducer,
+        getSearchReducer,
         userReducer
     }),
     applyMiddleware(thunk)

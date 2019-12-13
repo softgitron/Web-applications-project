@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 
 import SignInView from "../components/signInView";
 
@@ -13,13 +12,13 @@ class SignInController extends Component {
 
     handleSignIn() {
         const credentials = { email: this.state.email, password: this.state.password };
-        this.props.signIn(credentials);
+        this.props.authenticate(credentials);
     }
 
     componentDidUpdate() {
         // If there is no error message proceed to main page
         if (!this.props.error && this.props.user.userId !== -1) {
-            this.props.history.push("/");
+            this.props.router.history.push("/");
         }
     }
 
@@ -40,4 +39,4 @@ class SignInController extends Component {
     }
 }
 
-export default withRouter(SignInController);
+export default SignInController;

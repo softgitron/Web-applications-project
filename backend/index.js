@@ -88,6 +88,7 @@ function makeConnection() {
             inserts.init(con);
             queries.init(con);
             removes.init(con);
+            setInterval(removes.revokeOldTokens, 1000 * 20 * constants.tokenCleanUpInterval);
             // Small delay to make sure database is ready
             setTimeout(init_listen, 500);
         })

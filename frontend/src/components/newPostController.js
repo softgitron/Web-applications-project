@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { NEW_POST_SUCCESS } from "../actions/newPost";
 
 import NewPostView from "../components/newPostView";
-
-const BASE_LOCATION = window.location.protocol + "//" + window.location.hostname + ":4040";
 
 class NewPostController extends Component {
     constructor(props) {
@@ -14,25 +12,9 @@ class NewPostController extends Component {
             title: "",
             text: "",
             visibility: true,
-            rendering: false,
             message: "",
             newPostKey: 0
         };
-    }
-
-    componentDidUpdate() {
-        let rendering = false;
-        const userId = Number(
-            this.props.location.pathname.substring(
-                this.props.location.pathname.lastIndexOf("/") + 1
-            )
-        );
-        if (this.props.location.pathname.includes("/user") && userId === this.props.user.userId) {
-            rendering = true;
-        } else {
-            rendering = false;
-        }
-        if (rendering !== this.state.rendering) this.setState({ rendering: rendering });
     }
 
     handleChange(props) {
@@ -43,55 +25,42 @@ class NewPostController extends Component {
         }
     }
 
-    async handlePost() {
-        const route = BASE_LOCATION + "/posts/newPost";
-        let res = await fetch(route, {
-            method: "post",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify({
-                title: this.state.title,
-                text: this.state.text,
-                visibility: Number(this.state.visibility)
-            })
-        });
-        if (res.ok) {
+    componentDidUpdate() {
+        if (this.props.newPostState === NEW_POST_SUCCESS) {
             const newPostKey = this.state.newPostKey + 1;
             this.setState({
                 title: "",
                 text: "",
                 visibility: true,
-                rendering: true,
                 message: "",
                 newPostKey: newPostKey
             });
-            this.props.history.push(this.props.location.pathname);
-        } else {
-            let newMessage = await res.json();
-            newMessage = newMessage.errors;
-            this.setState({ message: newMessage[0].msg + " " + newMessage[0].param });
+            this.props.resetStatus();
         }
+    }
+
+    handlePost() {
+        const post = {
+            title: this.state.title,
+            text: this.state.text,
+            visibility: Number(this.state.visibility)
+        };
+        this.props.newPost(post);
     }
 
     render() {
-        let render;
-        if (this.state.rendering === true) {
-            render = (
-                <NewPostView
-                    key={"POST_" + this.state.newPostKey}
-                    functions={{
-                        handleChange: this.handleChange,
-                        post: this.handlePost
-                    }}
-                    message={this.state.message}
-                    visibility={this.state.visibility}
-                ></NewPostView>
-            );
-        } else {
-            render = <div></div>;
-        }
-        return <div>{render}</div>;
+        return (
+            <NewPostView
+                key={"POST_" + this.state.newPostKey}
+                functions={{
+                    handleChange: this.handleChange,
+                    post: this.handlePost
+                }}
+                message={this.props.message}
+                visibility={this.state.visibility}
+            ></NewPostView>
+        );
     }
 }
 
-export default withRouter(NewPostController);
+export default NewPostController;

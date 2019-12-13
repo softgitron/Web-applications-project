@@ -72,7 +72,18 @@ export default function SignUp(props) {
                                 label="Password"
                                 type="password"
                                 id="password"
-                                autoComplete="current-password"
+                                onChange={props.functions.handleChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="passwordAgain"
+                                label="Password again"
+                                type="password"
+                                id="passwordAgain"
                                 onChange={props.functions.handleChange}
                             />
                         </Grid>

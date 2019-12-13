@@ -1,44 +1,43 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroller";
+import Typography from "@material-ui/core/Typography";
 
-import PostView from "../components/postView";
+import ContentView from "./contentView";
 
 class postController extends Component {
     constructor(props) {
         super(props);
-        this.handleLocationChange = this.handleLocationChange.bind(this);
         this.updatePosts = this.updatePosts.bind(this);
         this.loadMore = this.loadMore.bind(this);
         this.handleClick = this.handleClick.bind(this);
-        props.history.listen(this.handleLocationChange);
         this.state = {
-            state: "LOADING",
+            status: "LOADING",
             loaderText: "Loading...",
+            pageTitle: "Around Chirp Web",
             loadMore: this.loadMore,
             interval: null
         };
-    }
-
-    handleLocationChange() {
-        this.props.resetPosts();
     }
 
     componentDidUpdate() {
         this.updatePosts();
     }
 
+    componentWillUnmount() {
+        clearInterval(this.state.interval);
+    }
+
     loadMore() {
+        if (this.props.fetching === true) return;
         // Check are we trying to load user posts
-        if (this.props.location.pathname.includes("/user")) {
+        let userId;
+        if (this.props.router.location.pathname.includes("/user")) {
             // https://stackoverflow.com/questions/4758103/last-segment-of-url
-            const userId = this.props.location.pathname.substring(
-                this.props.location.pathname.lastIndexOf("/") + 1
+            userId = this.props.router.location.pathname.substring(
+                this.props.router.location.pathname.lastIndexOf("/") + 1
             );
-            this.props.getUserPosts(userId, this.props.results.lastId);
-        } else {
-            this.props.getPublicPosts(this.props.results.lastId);
         }
+        this.props.getPosts(userId, this.props.results.lastId);
     }
 
     updatePosts() {
@@ -47,7 +46,7 @@ class postController extends Component {
             let interval = null;
             if (this.state.interval === null) interval = setInterval(this.loadMore, 10000);
             newState = {
-                state: "ERROR",
+                status: "ERROR",
                 loaderText: "ERROR: " + this.props.message,
                 loadMore: () => {},
                 interval: interval
@@ -55,22 +54,31 @@ class postController extends Component {
         } else {
             if (this.state.interval !== null) clearInterval(this.state.interval);
             newState = {
-                state: "LOADING",
+                status: "LOADING",
                 loaderText: "Loading...",
                 loadMore: this.loadMore,
                 interval: null
             };
         }
-        if (newState.state !== this.state.state) this.setState(newState);
+        if (newState.status !== this.state.status) {
+            this.setState(newState);
+        }
+        // Handle page's title
+        let newTitle;
+        if (this.props.router.location.pathname.includes("/user")) {
+            if (this.props.results.posts.length !== 0) {
+                newTitle = this.props.results.posts[0].nickname + "'s page";
+            }
+        } else if (this.props.router.location.pathname === "/") {
+            newTitle = "Around Chirp Web";
+        }
+        if (newTitle !== this.state.pageTitle) this.setState({ pageTitle: newTitle });
     }
 
     handleClick(props) {
-        const nickname = props.currentTarget.innerText;
-        const posts = this.props.results.posts;
-        const userId = posts.find(function(candidate) {
-            return candidate.nickname === nickname;
-        }).userId;
-        this.props.history.push("/user/" + String(userId));
+        const userId = props.currentTarget.dataset.id;
+        this.props.router.history.push("/user/" + String(userId));
+        // this.setState({ pageTitle: nickname + "'s page" });
     }
 
     render() {
@@ -81,19 +89,24 @@ class postController extends Component {
                 hasMore={Boolean(this.props.results.lastId)}
                 threshold={2000}
                 loader={
-                    <div
-                        className="loader"
-                        style={{ textAlign: "center", fontSize: 24, padding: 10 }}
-                        key={0}
-                    >
-                        <b>{this.state.loaderText}</b>
+                    <div style={{ textAlign: "center", padding: 10 }} key="LOADER_DIV">
+                        <Typography variant="h5" component="p">
+                            {this.state.loaderText}
+                        </Typography>
                     </div>
                 }
             >
-                <PostView posts={this.props.results.posts} onClick={this.handleClick}></PostView>
+                <ContentView
+                    contents={this.props.results.posts}
+                    onClick={this.handleClick}
+                    error={this.props.message}
+                    pageTitle={this.state.pageTitle}
+                    pageEmptyTitle={"There are no posts yet on this page..."}
+                    fetching={this.props.fetching}
+                ></ContentView>
             </InfiniteScroll>
         );
     }
 }
 
-export default withRouter(postController);
+export default postController;

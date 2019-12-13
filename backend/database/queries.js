@@ -71,8 +71,8 @@ exports.findUser = request => {
     if (request.resultsCount === undefined) request.resultsCount = 10;
     if (request.userAfterId === undefined) request.userAfterId = 2147483647;
     command =
-        `SELECT userId, nickname, profilePicture, visibility FROM chirpdb.users WHERE (nickname LIKE "%${request.query}%" ` +
-        `OR email LIKE "%${request.query}%") AND userId<${request.userAfterId} ORDER BY userId DESC limit ${request.resultsCount};`;
+        `SELECT userId, nickname, profilePicture, visibility FROM chirpdb.users WHERE (lower(nickname) LIKE "%${request.query}%" ` +
+        `OR lower(email) LIKE "%${request.query}%") AND userId<${request.userAfterId} ORDER BY userId DESC limit ${request.resultsCount};`;
     return dbConnection.execute(command);
 };
 
@@ -82,12 +82,12 @@ exports.findPost = request => {
     if (request.userId === -1) {
         command =
             `SELECT posts.postId, posts.userId, users.nickname, posts.timestamp, posts.title, posts.text, posts.image ` +
-            `FROM chirpdb.posts INNER JOIN users ON posts.userId=users.userId WHERE (title LIKE "%${request.query}%" OR text LIKE "%${request.query}%") ` +
+            `FROM chirpdb.posts INNER JOIN users ON posts.userId=users.userId WHERE (lower(title) LIKE "%${request.query}%" OR lower(text) LIKE "%${request.query}%") ` +
             `AND posts.visibility=1 AND posts.postId<${request.postAfterId} ORDER BY posts.postId DESC limit ${request.resultsCount};`;
     } else {
         command =
             `SELECT posts.postId, posts.userId, users.nickname, posts.timestamp, posts.title, posts.text, posts.image ` +
-            `FROM chirpdb.posts INNER JOIN users ON posts.userId=users.userId WHERE (title LIKE "%${request.query}%" OR text LIKE "%${request.query}%") ` +
+            `FROM chirpdb.posts INNER JOIN users ON posts.userId=users.userId WHERE (lower(title) LIKE "%${request.query}%" OR lower(text) LIKE "%${request.query}%") ` +
             `AND (posts.visibility=1 OR posts.userId=${request.userId}) AND posts.postId<${request.postAfterId} ORDER BY posts.postId DESC limit ${request.resultsCount};`;
     }
     return dbConnection.execute(command);

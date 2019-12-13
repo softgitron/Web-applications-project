@@ -1,56 +1,53 @@
 import {
-    SIGN_IN,
-    SIGN_UP,
-    SIGN_IN_SUCCESS,
-    SIGN_IN_FAILURE,
+    AUTHENTICATE,
+    CHECK_COOKIE,
+    AUTHENTICATION_SUCCESS,
+    AUTHENTICATION_FAILURE,
     LOG_OUT,
     LOG_OUT_SUCCESS,
     LOG_OUT_FAILURE
 } from "../actions/user";
 
-import { cleanString } from "../components/cleaner";
+import { PAGE_CHANGE } from "../actions/user";
+
+import { cleanString } from "../misc/cleaner";
+import errorParser from "../misc/errorParser";
 
 const initialState = {
     isFetching: false,
     user: { userId: -1, email: "", nickname: "" },
     message: "",
-    state: LOG_OUT_SUCCESS
+    authenticationState: LOG_OUT_SUCCESS
 };
 
 export function userReducer(state = initialState, action) {
     switch (action.type) {
-        case SIGN_IN:
+        case AUTHENTICATE:
             return Object.assign({}, state, {
                 isFetching: true
             });
 
-        case SIGN_UP:
+        case CHECK_COOKIE:
             return Object.assign({}, state, {
-                isFetching: true
+                authenticationState: CHECK_COOKIE
             });
 
-        case SIGN_IN_SUCCESS:
+        case AUTHENTICATION_SUCCESS:
             let newUser = action.payload.results;
             newUser.nickname = cleanString(newUser.nickname);
-            // Clean nickname
             return Object.assign({}, state, {
                 isFetching: false,
                 user: newUser,
                 message: "",
-                state: SIGN_IN_SUCCESS
+                authenticationState: AUTHENTICATION_SUCCESS
             });
 
-        case SIGN_IN_FAILURE:
-            let newMessage = action.payload.message.errors;
-            if (typeof newMessage === "undefined") {
-                newMessage = "";
-            } else if (typeof newMessage !== "string") {
-                newMessage = newMessage[0].msg + " " + newMessage[0].param;
-            }
+        case AUTHENTICATION_FAILURE:
+            let newMessage = errorParser(action.payload);
             return Object.assign({}, state, {
                 isFetching: false,
                 message: newMessage,
-                state: SIGN_IN_FAILURE
+                authenticationState: AUTHENTICATION_FAILURE
             });
         case LOG_OUT:
             return Object.assign({}, state, {
@@ -64,7 +61,12 @@ export function userReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 isFetching: false,
                 message: action.payload.message.errors,
-                state: LOG_OUT_FAILURE
+                authenticationState: AUTHENTICATION_FAILURE
+            });
+
+        case PAGE_CHANGE:
+            return Object.assign({}, state, {
+                message: ""
             });
 
         default:

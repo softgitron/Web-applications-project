@@ -34,6 +34,7 @@ services:
             MYSQL_PASSWORD: /run/secrets/db_password
             WEB_TOKEN_PRIVATE_KEY: /run/secrets/token_pk
             CORS_SITES: /run/secrets/cors_sites
+            NODE_ENV: production
         secrets:
             - db_password
             - token_pk

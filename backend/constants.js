@@ -15,5 +15,7 @@ module.exports = Object.freeze({
     textMinLength: 0,
     textMaxLength: 160,
     imageUUIDLength: 60,
+    tokenMaxTime: 30,
+    tokenCleanUpInterval: 60,
     unknownError: "Unknown error"
 });

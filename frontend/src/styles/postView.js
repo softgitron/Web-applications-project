@@ -23,6 +23,9 @@ export const style = makeStyles(theme => ({
     title: {
         fontSize: 14
     },
+    pageTitle: {
+        marginTop: 24
+    },
     pos: {
         marginBottom: 12
     },

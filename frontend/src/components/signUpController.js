@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 
 import SignUpView from "../components/signUpView";
 
@@ -21,15 +20,16 @@ class SignUpController extends Component {
             email: this.state.email,
             nickname: this.state.nickname,
             password: this.state.password,
+            passwordAgain: this.state.passwordAgain,
             visibility: Number(this.state.visibility)
         };
-        this.props.signUp(credentials);
+        this.props.authenticate(credentials);
     }
 
     componentDidUpdate() {
         // If there is no error message proceed to main page
         if (!this.props.error && this.props.user.userId !== -1) {
-            this.props.history.push("/");
+            this.props.router.history.push("/");
         }
     }
 
@@ -55,4 +55,4 @@ class SignUpController extends Component {
     }
 }
 
-export default withRouter(SignUpController);
+export default SignUpController;

@@ -30,7 +30,7 @@ exports.getUserPosts = async req => {
     // Check does user exists and get visibility
     let public;
     [resultsVisibility, _] = await queries.checkIsPublic(req.body.userId);
-    if (resultsVisibility[0].length === 0) {
+    if (resultsVisibility.length === 0) {
         throw "User not found";
     } else {
         public = resultsVisibility[0].visibility;

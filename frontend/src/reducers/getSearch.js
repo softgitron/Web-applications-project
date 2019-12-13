@@ -1,43 +1,43 @@
-import { GET_POSTS, GET_POSTS_SUCCESS, GET_POSTS_FAILURE, RESET_POSTS } from "../actions/getPosts";
+import { GET_SEARCH_RESULTS, SEARCH_SUCCESS, SEARCH_FAILURE } from "../actions/getSearch";
 import { PAGE_CHANGE } from "../actions/user";
-import { NEW_POST_SUCCESS } from "../actions/newPost";
 
 import cleaner from "../misc/cleaner";
 import errorParser from "../misc/errorParser";
 
 const initialState = {
     isFetching: false,
-    results: { lastId: 2147483647, posts: [] },
+    results: { lastUserId: 2147483647, lastPostId: 2147483647, users: [], posts: [] },
     message: ""
 };
 
-export function getPostsReducer(state = initialState, action) {
+export function getSearchReducer(state = initialState, action) {
     switch (action.type) {
-        case GET_POSTS:
+        case GET_SEARCH_RESULTS:
             return Object.assign({}, state, {
                 isFetching: true
             });
 
-        case GET_POSTS_SUCCESS:
+        case SEARCH_SUCCESS:
             let newResults = Object.assign({}, state.results);
-            newResults.lastId = action.payload.results.lastId;
+            newResults.lastUserId = action.payload.results.lastUserId;
+            newResults.lastPostId = action.payload.results.lastPostId;
             newResults.posts = newResults.posts.concat(cleaner(action.payload.results.posts));
+            newResults.users = newResults.users.concat(cleaner(action.payload.results.users));
             return Object.assign({}, state, {
                 isFetching: false,
                 results: newResults,
                 message: ""
             });
 
-        case GET_POSTS_FAILURE:
+        case SEARCH_FAILURE:
             let newMessage = errorParser(action.payload);
             return Object.assign({}, state, {
                 isFetching: false,
                 message: newMessage,
                 error: true
             });
-        case RESET_POSTS:
+
         case PAGE_CHANGE:
-        case NEW_POST_SUCCESS:
             let newState = initialState;
             newState.isFetching = state.isFetching;
             return Object.assign({}, state, newState);

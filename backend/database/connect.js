@@ -13,7 +13,8 @@ let MYSQL_PASSWORD = process.env["MYSQL_PASSWORD"];
 
 //Fix docker secrets
 if (MYSQL_PASSWORD === undefined) {
-    console.log("There is something wrong with environment variables. Exiting...");
+    console.log("There is something wrong with environment variables.");
+    console.log("Run 'source ../init_env.sh' Exiting for now...");
     process.exit(5);
 }
 if (MYSQL_PASSWORD.startsWith("/")) {
