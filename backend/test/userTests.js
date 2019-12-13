@@ -15,7 +15,7 @@ describe("User tests", () => {
         describe("Create new user normaly", () => {
             it("Should create new user and return details and token", done => {
                 chai.request(server)
-                    .post("/users/createNewUser")
+                    .post("/api/users/createNewUser")
                     .send({
                         email: "henry@example.com",
                         password: "Super secret",
@@ -35,7 +35,7 @@ describe("User tests", () => {
         describe("Create new user with same email", () => {
             it("Should return error 'Email allready exists'", done => {
                 chai.request(server)
-                    .post("/users/createNewUser")
+                    .post("/api/users/createNewUser")
                     .send({
                         email: "henry@example.com",
                         password: "My password",
@@ -53,7 +53,7 @@ describe("User tests", () => {
         describe("Create new user without password", () => {
             it("Should return error about missing value", done => {
                 chai.request(server)
-                    .post("/users/createNewUser")
+                    .post("/api/users/createNewUser")
                     .send({
                         email: "henry123@example.com",
                         nickname: "henryzf",
@@ -74,7 +74,7 @@ describe("User tests", () => {
         describe("Authenticate with correct password", () => {
             it("Should return new access token", done => {
                 chai.request(server)
-                    .post("/users/authenticate")
+                    .post("/api/users/authenticate")
                     .send({
                         email: "henry@example.com",
                         password: "Super secret"
@@ -97,7 +97,7 @@ describe("User tests", () => {
         describe("Authenticate with bad password", () => {
             it("Should return 'Password is incorrect'", done => {
                 chai.request(server)
-                    .post("/users/authenticate")
+                    .post("/api/users/authenticate")
                     .send({
                         email: "henry@example.com",
                         password: "This is wrong password"
@@ -113,7 +113,7 @@ describe("User tests", () => {
         describe("Logout with correct details", () => {
             it("Should return 'Logout ok'", done => {
                 chai.request(server)
-                    .post("/users/logout")
+                    .post("/api/users/logout")
                     .set({ "x-access-token": token })
                     .end((err, res) => {
                         console.log("Response Body:", res.body);
@@ -126,7 +126,7 @@ describe("User tests", () => {
         describe("Logout with old token", () => {
             it("Should return 'Token has expired.'", done => {
                 chai.request(server)
-                    .post("/users/logout")
+                    .post("/api/users/logout")
                     .set({ "x-access-token": token })
                     .end((err, res) => {
                         console.log("Response Body:", res.body);
@@ -139,7 +139,7 @@ describe("User tests", () => {
         describe("Logout without token", () => {
             it("Should return 'Unauthorized'", done => {
                 chai.request(server)
-                    .post("/users/logout")
+                    .post("/api/users/logout")
                     .end((err, res) => {
                         console.log("Response Body:", res.body);
                         res.should.have.status(401);

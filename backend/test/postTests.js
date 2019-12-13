@@ -12,7 +12,7 @@ let id;
 before(done => {
     // Create new user
     chai.request(server)
-        .post("/users/createNewUser")
+        .post("/api/users/createNewUser")
         .send({
             email: "postman@example.com",
             password: "Super secret",
@@ -32,7 +32,7 @@ describe("Post tests", () => {
         describe("Create new post normaly", () => {
             it("Should create new post", done => {
                 chai.request(server)
-                    .post("/posts/newPost")
+                    .post("/api/posts/newPost")
                     .set({ "x-access-token": token })
                     .send({ title: "This is a tittle", text: "Testing text", visibility: 1 })
                     .end((err, res) => {
@@ -46,7 +46,7 @@ describe("Post tests", () => {
         describe("Create new post without token", () => {
             it("Should be unauthorized", done => {
                 chai.request(server)
-                    .post("/posts/newPost")
+                    .post("/api/posts/newPost")
                     .send({ title: "This is a tittle", text: "Testing text", visibility: 1 })
                     .end((err, res) => {
                         console.log("Response Body:", res.body);
@@ -61,7 +61,7 @@ describe("Post tests", () => {
         describe("Get 10 newest public posts", () => {
             it("Should return 10 newest public posts", done => {
                 chai.request(server)
-                    .post("/posts/getPublicPosts")
+                    .post("/api/posts/getPublicPosts")
                     .end((err, res) => {
                         // console.log("Response Body:", res.body);
                         res.should.have.status(200);
@@ -73,7 +73,7 @@ describe("Post tests", () => {
         describe("Get only first post", () => {
             it("Should return first post", done => {
                 chai.request(server)
-                    .post("/posts/getPublicPosts")
+                    .post("/api/posts/getPublicPosts")
                     .send({ afterId: 2 })
                     .end((err, res) => {
                         // console.log("Response Body:", res.body);
@@ -101,7 +101,7 @@ describe("Post tests", () => {
         describe("Get 100 posts (Get whole test data)", () => {
             it("Should return 100 posts", done => {
                 chai.request(server)
-                    .post("/posts/getPublicPosts")
+                    .post("/api/posts/getPublicPosts")
                     .send({ postCount: 100 })
                     .end((err, res) => {
                         // console.log("Response Body:", res.body);
@@ -116,7 +116,7 @@ describe("Post tests", () => {
         describe("Get public user posts", () => {
             it("Should return public user posts", done => {
                 chai.request(server)
-                    .post("/posts/getUserPosts")
+                    .post("/api/posts/getUserPosts")
                     .send({
                         userId: "99"
                     })
@@ -146,7 +146,7 @@ describe("Post tests", () => {
         describe("Create new private post normaly", () => {
             it("Should create new private post", done => {
                 chai.request(server)
-                    .post("/posts/newPost")
+                    .post("/api/posts/newPost")
                     .set({ "x-access-token": token })
                     .send({
                         title: "This is a private tittle",
@@ -164,7 +164,7 @@ describe("Post tests", () => {
         describe("Get own posts", () => {
             it("Should return own posts (2)", done => {
                 chai.request(server)
-                    .post("/posts/getUserPosts")
+                    .post("/api/posts/getUserPosts")
                     .set({ "x-access-token": token })
                     .send({
                         userId: id
@@ -180,7 +180,7 @@ describe("Post tests", () => {
         describe("Access private user without authentication", () => {
             it("Should return 'Unauthorized'", done => {
                 chai.request(server)
-                    .post("/posts/getUserPosts")
+                    .post("/api/posts/getUserPosts")
                     .send({
                         userId: 1001
                     })

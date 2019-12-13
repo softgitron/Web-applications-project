@@ -44,7 +44,7 @@ module.exports = function(req, res, next) {
                 return;
             } else {
                 req.session = null;
-                if (req.path === "/users/authenticate") {
+                if (req.path === "/api/users/authenticate") {
                     req.user.authorization = "UNAUTHORIZED";
                     req.user.id = -1;
                     next();

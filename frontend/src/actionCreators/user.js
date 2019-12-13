@@ -9,7 +9,7 @@ import {
     PAGE_CHANGE
 } from "../actions/user";
 
-const BASE_LOCATION = window.location.protocol + "//" + window.location.hostname + ":4040";
+const BASE_LOCATION = window.location.protocol + "//" + window.location.hostname + ":4040/api";
 
 export function authenticate(credentials) {
     return dispatch => {
@@ -35,7 +35,9 @@ export function authenticate(credentials) {
                 // console.log(res.body);
                 if (res.ok) {
                     return res.json().then(res => {
-                        document.cookie = JSON.stringify(res);
+                        let cookieContent = JSON.stringify(res);
+                        cookieContent += ";path=/";
+                        document.cookie = cookieContent;
                         dispatch(authenticationSuccess(res));
                     });
                 } else {

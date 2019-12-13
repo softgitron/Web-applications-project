@@ -77,9 +77,9 @@ const postRouter = require("./routes/posts");
 const searchRouter = require("./routes/search");
 
 // Initialize routes
-app.use("/users", userRouter);
-app.use("/posts", postRouter);
-app.use("/search", searchRouter);
+app.use("/api/users", userRouter);
+app.use("/api/posts", postRouter);
+app.use("/api/search", searchRouter);
 
 function makeConnection() {
     dbConnect

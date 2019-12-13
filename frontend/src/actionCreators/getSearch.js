@@ -1,6 +1,6 @@
 import { GET_SEARCH_RESULTS, SEARCH_SUCCESS, SEARCH_FAILURE } from "../actions/getSearch";
 
-const BASE_LOCATION = window.location.protocol + "//" + window.location.hostname + ":4040";
+const BASE_LOCATION = window.location.protocol + "//" + window.location.hostname + ":4040/api";
 
 export function getSearchResults(query) {
     return dispatch => {
