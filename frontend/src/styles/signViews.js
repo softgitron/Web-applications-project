@@ -5,8 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 export function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
-            {"Made by "}
-            Roni Juntunen
+            {"Made by Roni Juntunen "}
             {new Date().getFullYear()}
             {"."}
         </Typography>

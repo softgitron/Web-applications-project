@@ -1,1 +1,1 @@
-http://localhost https://localhost http://192.168.3.13
+http://localhost https://localhost http://localhost:8080 https://localhost:8080 http://192.168.3.13:8080
