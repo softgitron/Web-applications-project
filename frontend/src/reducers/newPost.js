@@ -5,6 +5,7 @@ import {
     INITIAL,
     RESET_STATUS
 } from "../actions/newPost";
+import { PAGE_CHANGE } from "../actions/user";
 import errorParser from "../misc/errorParser";
 
 const initialState = {
@@ -31,6 +32,7 @@ export function newPostReducer(state = initialState, action) {
                 error: true
             });
         case RESET_STATUS:
+        case PAGE_CHANGE:
             return Object.assign({}, state, initialState);
 
         default:

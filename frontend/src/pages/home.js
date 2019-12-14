@@ -8,12 +8,11 @@ import NewPostController from "../containers/newPost";
 class Home extends Component {
     constructor(props) {
         super(props);
-        this.handleLocationChange = this.handleLocationChange.bind(this);
         this.updateStatus = this.updateStatus.bind(this);
         this.state = { renderNewPost: false };
     }
 
-    handleLocationChange() {
+    componentDidMount() {
         this.updateStatus();
     }
 
@@ -51,7 +50,7 @@ class Home extends Component {
         return (
             <div>
                 <MenuController {...props}></MenuController>
-                <div style={{ height: "5em" }}></div>
+                <div style={{ height: "4em" }}></div>
                 {render}
                 <PostController router={props.router}></PostController>
             </div>

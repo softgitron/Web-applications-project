@@ -16,6 +16,8 @@ services:
             - db_data:/var/lib/mysql
         expose:
             - "3306"
+        security_opt:
+            - seccomp:unconfined
 
     backend:
         build: ./backend

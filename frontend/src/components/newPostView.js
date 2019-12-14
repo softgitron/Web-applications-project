@@ -3,6 +3,7 @@ import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -10,9 +11,18 @@ import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { style } from "../styles/postView";
+import getRawMarkup from "../misc/gerMarkup";
+import "../styles/content.css";
 
 function postView(props) {
     const classes = style();
+
+    let countColor;
+    if (props.count > 320) {
+        countColor = "red";
+    } else {
+        countColor = "black";
+    }
 
     return (
         <div className={classes.root}>
@@ -52,10 +62,28 @@ function postView(props) {
                                             onChange={props.functions.handleChange}
                                         />
                                     </Grid>
+                                    <Grid item xs={"auto"} style={{ padding: 0, paddingLeft: 8 }}>
+                                        <Typography
+                                            className={classes.count}
+                                            style={{ color: countColor }}
+                                        >
+                                            {props.count + "/320"}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={8} style={{ padding: 0, paddingLeft: 8 }}>
+                                        <Typography className={classes.error}>
+                                            {props.message}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} style={{ paddingBottom: 0 }}>
+                                        <Link
+                                            href="https://jonschlinkert.github.io/remarkable/demo/"
+                                            variant="body2"
+                                        >
+                                            {"Markup tips (external site)"}
+                                        </Link>
+                                    </Grid>
                                 </Grid>
-                                <Typography variant="h4" className={classes.error}>
-                                    {props.message}
-                                </Typography>
                                 <Grid
                                     container
                                     spacing={2}
@@ -89,6 +117,23 @@ function postView(props) {
                                     </Grid>
                                 </Grid>
                             </form>
+                        </CardContent>
+                    </Card>
+                </GridListTile>
+                <GridListTile>
+                    <Card className={classes.card}>
+                        <CardContent>
+                            <Typography variant="h5" component="h2">
+                                Post preview:
+                            </Typography>
+                            <br></br>
+                            <Typography variant="h5" component="h2">
+                                {props.title}
+                            </Typography>
+                            <div
+                                className={"content " + classes.content}
+                                dangerouslySetInnerHTML={getRawMarkup(props.text)}
+                            />
                         </CardContent>
                     </Card>
                 </GridListTile>

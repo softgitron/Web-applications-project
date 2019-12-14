@@ -6,6 +6,8 @@ import Link from "@material-ui/core/Link";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { style } from "../styles/postView";
+import getRawMarkup from "../misc/gerMarkup";
+import "../styles/content.css";
 
 function contentView(props) {
     const classes = style();
@@ -45,9 +47,10 @@ function contentView(props) {
                                             : ""}
                                     </i>
                                 </Typography>
-                                <Typography className={classes.text} variant="body2">
-                                    {content.text}
-                                </Typography>
+                                <div
+                                    className={"content " + classes.content}
+                                    dangerouslySetInnerHTML={getRawMarkup(content.text)}
+                                />
                             </CardContent>
                         </Card>
                     </GridListTile>

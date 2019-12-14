@@ -33,7 +33,11 @@ export const style = makeStyles(theme => ({
         marginLeft: 10
     },
     form: {
-        marginTop: 16
+        marginTop: 0
+    },
+    count: {
+        marginTop: 6,
+        fontSize: 16
     },
     nickname: {
         color: "#FF9800",
@@ -42,6 +46,7 @@ export const style = makeStyles(theme => ({
             cursor: "pointer"
         }
     },
+    content: {},
     text: {
         wordWrap: "break-word"
     },

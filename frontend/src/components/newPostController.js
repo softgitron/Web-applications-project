@@ -11,6 +11,7 @@ class NewPostController extends Component {
         this.state = {
             title: "",
             text: "",
+            count: 0,
             visibility: true,
             message: "",
             newPostKey: 0
@@ -23,6 +24,9 @@ class NewPostController extends Component {
         } else {
             this.setState({ [props.target.id]: props.target.value });
         }
+        if (props.target.id === "text") {
+            this.setState({ count: props.target.value.length });
+        }
     }
 
     componentDidUpdate() {
@@ -31,6 +35,7 @@ class NewPostController extends Component {
             this.setState({
                 title: "",
                 text: "",
+                count: 0,
                 visibility: true,
                 message: "",
                 newPostKey: newPostKey
@@ -58,6 +63,10 @@ class NewPostController extends Component {
                 }}
                 message={this.props.message}
                 visibility={this.state.visibility}
+                title={this.state.title}
+                text={this.state.text}
+                count={this.state.count}
+                getRawMarkup={this.getRawMarkup}
             ></NewPostView>
         );
     }

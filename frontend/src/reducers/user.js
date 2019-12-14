@@ -58,11 +58,12 @@ export function userReducer(state = initialState, action) {
             return Object.assign({}, state, initialState);
 
         case LOG_OUT_FAILURE:
-            return Object.assign({}, state, {
+            return Object.assign({}, state, initialState);
+        /*             return Object.assign({}, state, {
                 isFetching: false,
                 message: action.payload.message.errors,
                 authenticationState: AUTHENTICATION_FAILURE
-            });
+            }); */
 
         case PAGE_CHANGE:
             return Object.assign({}, state, {

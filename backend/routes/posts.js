@@ -13,7 +13,7 @@ const postsController = require("../controllers/postsController");
  *
  * @apiHeader {String} [x-access-token] authentication token of the session. (Can be supplied via cookie too.)
  * @apiParam {String{5..60}} title Title of the post
- * @apiParam {String{4..72}} [text] User post itself.
+ * @apiParam {String{0..320}} [text] User post itself.
  * @apiParam {String{60}} [image] Image UUID.
  * @apiParam {Number=0,1} visibility visibility value, 0 for private and 1 for public.
  *
@@ -38,9 +38,6 @@ const postsController = require("../controllers/postsController");
 router.post(
     "/newPost",
     [
-        sanitizeBody("*")
-            .trim()
-            .escape(),
         body("title").isLength({
             min: constants.tittleMinLength,
             max: constants.tittleMaxLength
@@ -55,7 +52,10 @@ router.post(
                 min: constants.imageUUIDLength,
                 max: constants.imageUUIDLength
             }),
-        body("visibility").isNumeric({ min: 0, max: 1 })
+        body("visibility").isNumeric({ min: 0, max: 1 }),
+        sanitizeBody("*")
+            .trim()
+            .escape()
     ],
     async (req, res) => {
         const errors = validationResult(req);

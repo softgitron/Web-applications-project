@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `chirpdb`.`users` (
   `visibility` TINYINT(4) NOT NULL,
   PRIMARY KEY (`userId`),
   UNIQUE INDEX `nickname_UNIQUE` (`nickname` ASC),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC));
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `chirpdb`.`logins` (
   `token` VARCHAR(200) NOT NULL,
@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS `chirpdb`.`posts` (
   `postId` INT NOT NULL AUTO_INCREMENT,
   `userId` INT NOT NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `title` VARCHAR(60) NOT NULL,
-  `text` VARCHAR(160) NULL,
+  `title` VARCHAR(360) NOT NULL,
+  `text` VARCHAR(1920) NULL,
   `image` CHAR(60) NULL,
   `visibility` TINYINT NOT NULL,
   PRIMARY KEY (`postId`),
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `chirpdb`.`posts` (
     FOREIGN KEY (`userId`)
     REFERENCES `chirpdb`.`users` (`userId`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `chirpdb`.`friends` (
   `userId1` INT NOT NULL REFERENCES `users`,
@@ -55,5 +55,5 @@ CREATE TABLE IF NOT EXISTS `chirpdb`.`notifications` (
     FOREIGN KEY (`userId`)
     REFERENCES `chirpdb`.`users` (`userId`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
