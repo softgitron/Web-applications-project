@@ -38,3 +38,10 @@ Please see repository's [Wiki page](https://github.com/softgitron/Web-applicatio
 -   Backend provided by [Node](https://nodejs.org/en/)
 -   Frontend provided by [React](https://reactjs.org/)
 -   Database provided by [Mysql](https://www.mysql.com/)
+-   Example meme provided by [Wikipedia](https://commons.wikimedia.org/wiki/File:Cat_Meme.jpg)
+-   Random word for testing provided by [Random Word Generator](https://randomwordgenerator.com/)
+
+## More screenshots
+![Chirp-Web Main page](https://raw.githubusercontent.com/softgitron/Web-applications-project/master/docs/pictures/User_page.png)
+<br><br>
+![Chirp-Web Main page](https://raw.githubusercontent.com/softgitron/Web-applications-project/master/docs/pictures/Login_page.png)
