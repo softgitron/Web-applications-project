@@ -1,8 +1,8 @@
 # Web-applications-project
 
-Microblogging project work related to web applications course (Chirp-Web) <br>
+Microblogging project work related to web applications course (Chirp-Web) <br><br>
 ![Chirp-Web Main page](https://raw.githubusercontent.com/softgitron/Web-applications-project/master/docs/pictures/Main_page.png)
-Live demo available [here](http://chirp-web.rahtiapp.fi/)
+<br>Live demo available [here](http://chirp-web.rahtiapp.fi/)
 
 ## About this project
 
