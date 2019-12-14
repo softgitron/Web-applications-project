@@ -11,10 +11,10 @@ BACKEND_PORT="80"
 
 # THESE VALUES SHOULD BE UPDATED BY YOU
 # Values will be passed to docker containers
-MYSQL_PASSWORD="pass"
-MYSQL_ROOT_PASSWORD="pass"
+MYSQL_PASSWORD="YOUR PASSWORD HERE"
+MYSQL_ROOT_PASSWORD="YOUR PASSWORD HERE"
 WEB_TOKEN_PRIVATE_KEY="YOUR TOKEN HERE"
-CORS_SITES="http://localhost https://localhost http://localhost:8080 https://localhost:8080 http://192.168.3.13:8080"
+CORS_SITES="http://localhost:8080 https://localhost:8080"
 
 export MYSQL_DATABASE
 export MYSQL_USER
