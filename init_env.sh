@@ -30,3 +30,5 @@ echo $MYSQL_ROOT_PASSWORD > ./db_root_password.txt
 echo $MYSQL_PASSWORD > ./db_password.txt
 echo $WEB_TOKEN_PRIVATE_KEY > ./token_pk.txt
 echo $CORS_SITES > ./cors_sites.txt
+
+sleep 1
